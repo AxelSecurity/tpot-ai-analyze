@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report_title }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <style>
+        body { padding: 2rem; }
+        .grid { grid-gap: 2rem; }
+        .campaign-card { margin-bottom: 2rem; }
+        h1, h2, h3 { text-align: center; }
+        .chart-container { position: relative; height: 40vh; width: 100%; margin-bottom: 2rem; }
+        .analysis-text { white-space: pre-wrap; font-family: monospace; background-color: var(--card-background-color); padding: 1rem; border-radius: var(--border-radius); }
+        .ioc-list { list-style-type: none; padding-left: 0; }
+        .ioc-list li { background-color: var(--card-background-color); padding: 0.5rem; margin-bottom: 0.5rem; border-left: 3px solid var(--primary); }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>{{ report_title }}</h1>
+            <p style="text-align: center;"><strong>Data di Generazione:</strong> {{ generation_date }}</p>
+        </header>
+
+        <section id="executive-summary">
+            <h2>Sintesi Esecutiva</h2>
+            <article>
+                <!-- Testo di Gemini qui -->
+                {{ gemini_sections.executive_summary | safe }}
+            </article>
+        </section>
+        
+        <section id="campaign-analysis">
+            <h2>Analisi delle Campagne di Attacco</h2>
+            <!-- Testo di Gemini qui -->
+            <article>
+                {{ gemini_sections.campaign_analysis | safe }}
+            </article>
+        </section>
+
+        <section id="charts">
+            <h2>Visualizzazione Dati Aggregati</h2>
+            <div class="grid">
+                <div class="chart-container"><canvas id="topCountriesChart"></canvas></div>
+                <div class="chart-container"><canvas id="topHoneypotsChart"></canvas></div>
+            </div>
+             <div class="grid">
+                <div class="chart-container"><canvas id="topUsernamesChart"></canvas></div>
+                <div class="chart-container"><canvas id="topPasswordsChart"></canvas></div>
+            </div>
+        </section>
+        
+        <section id="background-noise">
+            <h2>Osservazioni sul Rumore di Fondo</h2>
+             <article>
+                <!-- Testo di Gemini qui -->
+                {{ gemini_sections.background_noise | safe }}
+            </article>
+        </section>
+        
+        <section id="iocs">
+            <h2>Indicatori di Compromissione (IoC) Rilevanti</h2>
+             <article>
+                <!-- Testo di Gemini qui -->
+                {{ gemini_sections.iocs | safe }}
+            </article>
+        </section>
+
+        <section id="recommendations">
+            <h2>Conclusioni e Raccomandazioni</h2>
+            <article>
+                <!-- Testo di Gemini qui -->
+                {{ gemini_sections.recommendations | safe }}
+            </article>
+        </section>
+
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function createChart(ctx, type, data, options) { new Chart(ctx, { type, data, options }); }
+        const chartData = {{ chart_data | tojson }};
+        const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }}};
+        if (chartData.top_countries.labels.length > 0) createChart(document.getElementById('topCountriesChart').getContext('2d'),'bar',{labels:chartData.top_countries.labels,datasets:[{label:'Top Paesi Attaccanti',data:chartData.top_countries.data,backgroundColor:'rgba(255, 99, 132, 0.5)'}]},{...chartOptions,indexAxis:'y'});
+        if (chartData.top_honeypots.labels.length > 0) createChart(document.getElementById('topHoneypotsChart').getContext('2d'),'doughnut',{labels:chartData.top_honeypots.labels,datasets:[{label:'Top Honeypot Colpiti',data:chartData.top_honeypots.data}]},chartOptions);
+        if (chartData.top_usernames.labels.length > 0) createChart(document.getElementById('topUsernamesChart').getContext('2d'),'bar',{labels:chartData.top_usernames.labels,datasets:[{label:'Top Username Tentati',data:chartData.top_usernames.data,backgroundColor:'rgba(54, 162, 235, 0.5)'}]},{...chartOptions,indexAxis:'y'});
+        if (chartData.top_passwords.labels.length > 0) createChart(document.getElementById('topPasswordsChart').getContext('2d'),'bar',{labels:chartData.top_passwords.labels,datasets:[{label:'Top Password Tentate',data:chartData.top_passwords.data,backgroundColor:'rgba(75, 192, 192, 0.5)'}]},{...chartOptions,indexAxis:'y'});
+    </script>
+</body>
+</html>

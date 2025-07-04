@@ -1,0 +1,16 @@
+# Ambiente virtuale Python
+venv/
+
+# Cache di Python e file compilati
+__pycache__/
+*.pyc
+
+# File di configurazione con segreti
+.env
+
+# Report generati (non vogliamo versionare l'output)
+tpot_report_*.md
+tpot_report_*.html
+
+# Log e file temporanei
+*.log
