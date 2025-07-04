@@ -1,36 +1,4 @@
-Hai perfettamente ragione, l'ho notato anche io dall'immagine. Il problema è sottile ma molto comune.
-
-**Non è che Markdown sia "rotto", ma quasi certamente i caratteri che hai incollato non sono quelli corretti.**
-
-### La Causa Esatta del Problema: Backtick "Smart" vs. Backtick "Plain"
-
-Il problema risiede nei caratteri usati per il formato `inline code`. Markdown si aspetta il carattere **backtick** (accento grave), che sulla tastiera italiana di solito si trova premendo `ALT` + `96` sul tastierino numerico, o a volte vicino al tasto `Invio`. Il suo aspetto è ` ` `.
-
-Molto spesso, quando si copia e incolla testo da editor "ricchi" (come Word, Google Docs, a volte anche da pagine web o client di chat), questi sostituiscono il backtick standard con dei caratteri tipograficamente "belli" ma tecnicamente sbagliati, come un apostrofo inclinato (`‘` o `’`).
-
-GitHub non riconosce questi caratteri "smart" come delimitatori di codice, e quindi non applica la formattazione.
-
-Nell'immagine, si vede chiaramente che `requirements.txt`, `.md` e `.html` non hanno lo sfondo grigio tipico del codice, confermando questa diagnosi.
-
-### La Soluzione: Il Codice Corretto da Incollare
-
-Ti fornisco qui sotto la versione del `README.md` in inglese, ma con la certezza assoluta che tutti i caratteri speciali di Markdown siano corretti.
-
-**Azione Correttiva:**
-
-1.  Vai sul tuo repository GitHub.
-2.  Clicca sul file `README.md`.
-3.  Clicca sull'icona della matita ("Edit this file") in alto a destra.
-4.  Seleziona **TUTTO** il testo presente e **cancellalo**.
-5.  Copia e incolla il blocco di codice che ti fornisco qui sotto.
-6.  Scorri in fondo alla pagina e clicca sul pulsante verde **"Commit changes"**.
-
-Con questa operazione, il tuo `README` verrà renderizzato in modo perfetto.
-
----
-
-### README.md (Versione Corretta)
-
+### README.md 
 ```markdown
 # T-Pot AI Analyzer 🧠🔍
 
@@ -133,3 +101,4 @@ The script will generate two report files in the project directory:
 ## 📄 License
 
 This project is licensed under the **MIT License**.
+```
