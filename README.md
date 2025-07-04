@@ -54,7 +54,7 @@ Follow these steps to get the analyzer up and running on your machine.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/[your-username]/tpot-ai-analyzer.git
+    git clone https://github.com/AxelSecurity/tpot-ai-analyze.git
     cd tpot-ai-analyzer
     ```
 
