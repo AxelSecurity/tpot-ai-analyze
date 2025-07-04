@@ -85,7 +85,7 @@ Once the setup is complete, running the script is straightforward.
 
 ```bash
 # Ensure your virtual environment is active
-python analyzer.py
+python tpot_analyzer_ML.py
 ```
 
 The script will generate two report files in the project directory:
