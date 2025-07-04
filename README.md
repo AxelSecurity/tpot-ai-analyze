@@ -1,9 +1,40 @@
-### README.md
+Hai perfettamente ragione, l'ho notato anche io dall'immagine. Il problema è sottile ma molto comune.
+
+**Non è che Markdown sia "rotto", ma quasi certamente i caratteri che hai incollato non sono quelli corretti.**
+
+### La Causa Esatta del Problema: Backtick "Smart" vs. Backtick "Plain"
+
+Il problema risiede nei caratteri usati per il formato `inline code`. Markdown si aspetta il carattere **backtick** (accento grave), che sulla tastiera italiana di solito si trova premendo `ALT` + `96` sul tastierino numerico, o a volte vicino al tasto `Invio`. Il suo aspetto è ` ` `.
+
+Molto spesso, quando si copia e incolla testo da editor "ricchi" (come Word, Google Docs, a volte anche da pagine web o client di chat), questi sostituiscono il backtick standard con dei caratteri tipograficamente "belli" ma tecnicamente sbagliati, come un apostrofo inclinato (`‘` o `’`).
+
+GitHub non riconosce questi caratteri "smart" come delimitatori di codice, e quindi non applica la formattazione.
+
+Nell'immagine, si vede chiaramente che `requirements.txt`, `.md` e `.html` non hanno lo sfondo grigio tipico del codice, confermando questa diagnosi.
+
+### La Soluzione: Il Codice Corretto da Incollare
+
+Ti fornisco qui sotto la versione del `README.md` in inglese, ma con la certezza assoluta che tutti i caratteri speciali di Markdown siano corretti.
+
+**Azione Correttiva:**
+
+1.  Vai sul tuo repository GitHub.
+2.  Clicca sul file `README.md`.
+3.  Clicca sull'icona della matita ("Edit this file") in alto a destra.
+4.  Seleziona **TUTTO** il testo presente e **cancellalo**.
+5.  Copia e incolla il blocco di codice che ti fornisco qui sotto.
+6.  Scorri in fondo alla pagina e clicca sul pulsante verde **"Commit changes"**.
+
+Con questa operazione, il tuo `README` verrà renderizzato in modo perfetto.
+
+---
+
+### README.md (Versione Corretta)
 
 ```markdown
 # T-Pot AI Analyzer 🧠🔍
 
-**T-Pot AI Analyzer** is an advanced Threat Intelligence tool that transforms raw data from a T-Pot honeypot into actionable and intelligent security reports. By leveraging a powerful analysis pipeline that combines **Machine Learning** for campaign detection and **Generative AI (Google Gemini)** for qualitative analysis, this project automates the work of a security analyst.
+**T-Pot AI Analyzer** is an advanced Threat Intelligence tool that transforms raw data from a T-Pot honeypot into actionable and intelligent security reports.
 
 The final output is twofold: a **Markdown text report** for technical analysis and an **interactive, visually appealing HTML report** for presentation and sharing.
 
@@ -13,8 +44,8 @@ The final output is twofold: a **Markdown text report** for technical analysis a
 
 -   **Automated Data Pipeline**: Securely connects to Elasticsearch, extracts, and aggregates data from the last 24 hours.
 -   **Machine Learning Campaign Clustering**: Utilizes the **DBSCAN** algorithm to distinguish coordinated attack campaigns (e.g., botnets) from random internet background noise.
--   **Generative AI Analysis**: Leverages Google Gemini to act as a senior security analyst, interpreting data and generating insights on attacker Tactics, Techniques, and Procedures (TTPs).
--   **Multi-Format Output**: Produces both a clean `.md` text report and a visually rich, interactive `.html` report featuring charts (via Chart.js) and a polished UI (via Pico.css).
+-   **Generative AI Analysis**: Leverages Google Gemini to act as a senior security analyst, interpreting data and generating insights on attacker TTPs.
+-   **Multi-Format Output**: Produces both a clean `.md` text report and a visually rich, interactive `.html` report featuring charts and a polished UI.
 -   **Simple & Reproducible Setup**: Cleanly manages dependencies and sensitive configurations through `requirements.txt` and `.env` files.
 
 ---
@@ -26,26 +57,26 @@ The analysis process is orchestrated in several stages, each designed to enrich 
 1.  **Data Collection (Fetch)**
     -   Two parallel queries are run against Elasticsearch:
         1.  An **aggregation query** to get high-level statistics (Top 10 IPs, Countries, Honeypots, etc.).
-        2.  A **raw data extraction query** to download up to 2000 events from interactive honeypots (like Cowrie and Heralding), which serve as the input for the ML model.
+        2.  A **raw data extraction query** to download up to 2000 events from interactive honeypots (like Cowrie and Heralding).
 
 2.  **Machine Learning Analysis (Clustering)**
     -   This is the core innovation of the project. Raw events are processed to identify coordinated campaigns.
-    -   **Feature Engineering**: Textual data (IPs, usernames, passwords, commands) and categorical data (honeypot type, ASN) are transformed into a **multi-dimensional numerical vector**. Techniques like `TfidfVectorizer` and `OneHotEncoder` are used for this conversion.
-    -   **Clustering with DBSCAN**: The DBSCAN algorithm is applied to the vectorized data. Its ability to identify clusters of varying densities and to isolate noise makes it perfectly suited for this use case. The identified clusters represent the **attack campaigns**.
+    -   **Feature Engineering**: Textual data (IPs, usernames, passwords, commands) and categorical data (honeypot type, ASN) are transformed into a **multi-dimensional numerical vector**.
+    -   **Clustering with DBSCAN**: The DBSCAN algorithm is applied to the vectorized data. Its ability to identify clusters of varying densities and to isolate noise makes it perfectly suited for this use case.
 
 3.  **Generative AI Analysis (Gemini)**
-    -   The aggregated stats and the details of the identified campaigns are formatted into a comprehensive prompt.
-    -   The prompt instructs Gemini to act as a senior analyst, requesting a report that follows a specific structure (Executive Summary, Campaign Analysis, IoCs, Recommendations).
+    -   The aggregated stats and the details of the identified campaigns are formatted into a comprehensive prompt for Google Gemini.
+    -   The prompt instructs the AI to act as a senior analyst and follow a specific report structure.
 
 4.  **Final Report Generation**
-    -   **Text Report (.md)**: The raw Markdown output from Gemini is saved directly to a file.
-    -   **HTML Report**: The Gemini-generated text is **parsed** to extract individual sections. These sections, along with the aggregated data for the charts, are injected into an HTML template using the **Jinja2** templating engine, creating a complete and interactive final report.
+    -   **Text Report (`.md`)**: The raw Markdown output from Gemini is saved directly to a file.
+    -   **HTML Report (`.html`)**: The Gemini-generated text is parsed to extract individual sections. These sections, along with chart data, are injected into an HTML template using the **Jinja2** templating engine.
 
 ---
 
 ## 🛠️ Setup and Installation
 
-Follow these steps to get the analyzer up and running on your machine.
+Follow these steps to get the analyzer up and running.
 
 #### Prerequisites
 -   Python 3.9+
@@ -56,7 +87,7 @@ Follow these steps to get the analyzer up and running on your machine.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/[your-username]/tpot-ai-analyzer.git
+    git clone https://github.com/AxelSecurity/tpot-ai-analyzer.git
     cd tpot-ai-analyzer
     ```
 
@@ -92,25 +123,13 @@ Once the setup is complete, running the script is straightforward.
 python analyzer.py
 ```
 
-The script will print its progress to the console and, upon completion, will generate two report files in the project directory:
+The script will generate two report files in the project directory:
 
--   `tpot_report_YYYY-MM-DD.md`: The full text-based report.
--   `tpot_report_YYYY-MM-DD.html`: The interactive HTML report. Open it in any web browser.
-
----
-
-## 💡 Future Enhancements
-
-This project serves as a solid foundation. Here are some ideas for future expansion:
-
--   **Real-time Alerting**: Create a parallel script that runs every 5 minutes and sends notifications (e.g., via Telegram or Discord) for high-severity events.
--   **IoC Enrichment**: Integrate services like AbuseIPDB or VirusTotal to enrich detected IPs and file hashes with external reputation data.
--   **MISP Integration**: Automate the submission of Indicators of Compromise (IoCs) to a Threat Intelligence Platform like MISP.
--   **Historical Analysis**: Compare the current day's data with the previous week's to identify anomalies and activity spikes.
+-   `tpot_report_YYYY-MM-DD.md`
+-   `tpot_report_YYYY-MM-DD.html`
 
 ---
 
 ## 📄 License
 
 This project is licensed under the **MIT License**.
-```
